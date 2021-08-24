@@ -12,12 +12,12 @@ if VERSION != "develop":
     path_to_file_PnL = "D:\\Export\\Tableau\\DP\\PnL\\"
     path_to_file_Calendar_shift = "D:\\Export\\Tableau\\DP\\Calendar_shift\\"
     #  main .log file
-    path_to_log = "D:\\Export\\Tableau\DP\\logs\\Commercial_PnL.log"
+    path_to_log = "D:\\Export\\Tableau\DP\\logs\\pyConvert.log"
 else:
     path_to_file_Commercial = "C:\\Users\\60001240\\Desktop\\DP\\Commercial\\"
     path_to_file_PnL = "C:\\Users\\60001240\\Desktop\\DP\\PnL\\"
     path_to_file_Calendar_shift = "C:\\Users\\60001240\\Desktop\\DP\\Calendar_shift\\"
-    path_to_log = "Commercial_PnL.log"
+    path_to_log = "pyConvert.log"
 
 # Название файлов по выгрузки
 list_name_Commercial = [
@@ -38,7 +38,7 @@ Calendar_shift = [
 ]
 
 #  Лог
-logging.basicConfig(filename="pyConvert.log", level=logging.INFO)
+logging.basicConfig(filename=path_to_log, level=logging.INFO)
 
 
 # Функция конвертирует данные и проверяет кол-во записей.
