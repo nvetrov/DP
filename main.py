@@ -12,7 +12,7 @@ if VERSION != "develop":
     path_to_file_PnL = "D:\\Export\\Tableau\\DP\\PnL\\"
     path_to_file_Calendar_shift = "D:\\Export\\Tableau\\DP\\Calendar_shift\\"
     #  main .log file
-    path_to_log = "D:\\Export\\Tableau\DP\\logs\\pyConvert.log"
+    path_to_log = "D:\\HyperLog\\DP\\pyConvert.log"
 else:
     path_to_file_Commercial = "C:\\Users\\60001240\\Desktop\\DP\\Commercial\\"
     path_to_file_PnL = "C:\\Users\\60001240\\Desktop\\DP\\PnL\\"
