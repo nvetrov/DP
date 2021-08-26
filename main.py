@@ -3,8 +3,8 @@ import logging
 from datetime import datetime
 import time
 
-VERSION = 1.0
-# VERSION = "develop"
+# VERSION = 1.0
+VERSION = "develop"
 
 if VERSION != "develop":
     # Путь к файлу для обработки:
@@ -53,12 +53,12 @@ def main(filename, path):
         df[df.columns[14]] = df[df.columns[14]].astype('int64')
         # Конвертируем в INT название столбца, чтобы не потерялось первое значение.
         df.rename(columns={df.columns[14]: int(float(df.columns[14]))}, inplace=True)
-        count_txt = df.shape[0]
+        count_txt = df.shape[0] + 1
         df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False)
     else:
         df = pd.read_csv(path + filename, delimiter=';', dtype=str)
         # count all  lines.
-        count_txt = df.shape[0]
+        count_txt = df.shape[0] + 1
         df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False)
         # Путь к файлу
         df = pd.read_csv(path + filename, delimiter=';', dtype=str)
@@ -66,7 +66,7 @@ def main(filename, path):
         df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False)
     '''Сверка по кол-ву: txt == csv'''
     df_new = pd.read_csv(path + filename, delimiter=';', dtype=str)
-    count_csv = df_new.shape[0]
+    count_csv = df_new.shape[0] + 1
 
     if count_txt == count_csv:
         print(f' count_txt {count_txt}  совпадает с count_csv {count_csv}')
