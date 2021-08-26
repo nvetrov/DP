@@ -1,29 +1,35 @@
-# DP
-Remove quotes
-1.Install python https://www.python.org/downloads/
+# Convert data from Hyperion.
 
 
-vscode install
-git clone https://github.com/nvetrov/DP.git
+1.Install python: https://www.python.org/downloads/  
+2. install vscode: https://code.visualstudio.com/download
+3. install git:  https://git-scm.com/download/win
+4. git clone https://github.com/nvetrov/DP.gitto D:\HyperPy\
+####Creating a virtual environment
+https://mothergeo-py.readthedocs.io/en/latest/development/how-to/venv-win.html
 
-open use vscode D:\HyperPy\DP
+<code>py -m pip install --user virtualenv </code>
 
-Creating a virtual environment
-py -m pip install --user virtualenv
-py -m venv env
-.\env\Scripts\activate
-py -m pip install --upgrade pip
+<code>py -m venv env </code>
+
+
+<code>.\env\Scripts\activate </code>
+
+<code>py -m pip install --upgrade pip </code>
+
 
 Проверить себя: where python
 Answer: (env) D:\HyperPy\DP>where python
               D:\HyperPy\DP\env\Scripts\python.exe
               D:\Python39\python.exe
 
-terminal: pip install -r .\requirements.txt
+##terminal: pip install -r .\requirements.txt
 
-#выдать права на папки:
+####выдать права на папки: 
+Дата: D:\Export\ 
+Запуск: D:\HyperCmd\
+Лог: D:\HyperLog\
 
-py -m pip install --user virtualenv
 
-# Загрузить изменения с сервера
-git pull
+### Загрузить изменения с сервера
+<code> git pull  </code> 
