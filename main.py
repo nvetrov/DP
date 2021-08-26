@@ -3,7 +3,7 @@ import logging
 from datetime import datetime
 import time
 
-VERSION = 1.1
+VERSION = 1.2
 # VERSION = "develop"
 
 if VERSION != "develop":
@@ -15,7 +15,7 @@ if VERSION != "develop":
     path_to_log = "D:\\HyperLog\\DP\\pyConvert.log"
 else:
     path_to_file_Commercial = "C:\\Users\\60001240\\Desktop\\DP\\Commercial\\"
-    path_to_file_PnL = "C:\\Users\\60001240\\Desktop\\DP\\PnL\\"
+    path_to_file_PnL = "C:\\Users\\XXXX\\Desktop\\DP\\PnL\\"
     path_to_file_Calendar_shift = "C:\\Users\\60001240\\Desktop\\DP\\Calendar_shift\\"
     path_to_log = "pyConvert.log"
 
