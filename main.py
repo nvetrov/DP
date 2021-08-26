@@ -3,8 +3,8 @@ import logging
 from datetime import datetime
 import time
 
-# VERSION = 1.0
-VERSION = "develop"
+VERSION = 1.1
+# VERSION = "develop"
 
 if VERSION != "develop":
     # Путь к файлу для обработки:
