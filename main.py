@@ -15,7 +15,7 @@ if VERSION != "develop":
     path_to_log = "D:\\HyperLog\\DP\\pyConvert.log"
 else:
     path_to_file_Commercial = "C:\\Users\\60001240\\Desktop\\DP\\Commercial\\"
-    path_to_file_PnL = "C:\\Users\\XXXX\\Desktop\\DP\\PnL\\"
+    path_to_file_PnL = "C:\\Users\\60001240\\Desktop\\DP\\PnL\\"
     path_to_file_Calendar_shift = "C:\\Users\\60001240\\Desktop\\DP\\Calendar_shift\\"
     path_to_log = "pyConvert.log"
 
@@ -45,7 +45,7 @@ logging.basicConfig(filename=path_to_log, level=logging.INFO)
 def main(filename, path):
     today = datetime.now()
     start_job = time.time()
-    print("Start")
+    print(filename)
     # Проверка типа поля DATA -> INT в CE_Calendar_shift.
     if filename == "CE_Calendar_shift.txt":
         df = pd.read_csv(path + filename, delimiter=';', encoding='1251')
@@ -85,6 +85,7 @@ def main(filename, path):
     del df
     del df_new
     # print("End: " + path + filename.replace(".txt", ".csv"))
+    # console
     return 0
 
 
