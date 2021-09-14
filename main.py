@@ -1,9 +1,10 @@
-import pandas as pd
+# import pandas as pd
+import dask.dataframe as dd
 import logging
 from datetime import datetime
 import time
 
-VERSION = 1.2
+VERSION = 1.3
 # VERSION = "develop"
 
 if VERSION != "develop":
@@ -48,26 +49,27 @@ def main(filename, path):
     print(filename)
     # Проверка типа поля DATA -> INT в CE_Calendar_shift.
     if filename == "CE_Calendar_shift.txt":
-        df = pd.read_csv(path + filename, delimiter=';', encoding='1251')
+        df = dd.read_csv(path + filename, delimiter=';', encoding='1251')
         # Конвертируем в INT
         df[df.columns[14]] = df[df.columns[14]].astype('int64')
         # Конвертируем в INT название столбца, чтобы не потерялось первое значение.
-        df.rename(columns={df.columns[14]: int(float(df.columns[14]))}, inplace=True)
-        count_txt = df.shape[0] + 1
-        df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False)
+        df = df.rename(columns={df.columns[14]: int(float(df.columns[14]))})
+        count_txt = df.shape[0].compute() + 1
+        df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False, single_file=True)
     else:
-        df = pd.read_csv(path + filename, delimiter=';', dtype=str)
+        df = dd.read_csv(path + filename, delimiter=';', dtype=str)
         # count all  lines.
-        count_txt = df.shape[0] + 1
-        df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False)
+        count_txt = df.shape[0].compute() + 1
+        df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False, single_file=True)
         # Путь к файлу
-        df = pd.read_csv(path + filename, delimiter=';', dtype=str)
+        df = dd.read_csv(path + filename, delimiter=';', dtype=str)
         # Убираю доп. ковычки
-        df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False)
+        df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False, single_file=True)
     '''Сверка по кол-ву: txt == csv'''
-    df_new = pd.read_csv(path + filename, delimiter=';', dtype=str)
-    count_csv = df_new.shape[0] + 1
-
+    df_new = dd.read_csv(path + filename, delimiter=';', dtype=str)
+    count_csv = df_new.shape[0].compute() + 1
+    # print('count_txt ', type(count_txt), count_txt)
+    # print('count_csv ', type(count_csv), count_csv)
     if count_txt == count_csv:
         print(f' count_txt {count_txt}  совпадает с count_csv {count_csv}')
     else:
@@ -104,7 +106,7 @@ if __name__ == '__main__':
         # Календарный сдвиг
         for file in Calendar_shift:
             main(filename=file, path=path_to_file_Calendar_shift)
-
+        print(time.time() - start_time)
     except EOFError as e:
         # print("Caught the EOF error.")
         logging.error("Caught the EOF error")
