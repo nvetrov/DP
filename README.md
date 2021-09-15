@@ -33,3 +33,5 @@ Answer: (env) D:\HyperPy\DP>where python
 
 ### Загрузить изменения с сервера
 <code> git pull  </code> 
+### Установить dask
+python -m pip install "dask[complete]"

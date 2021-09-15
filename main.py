@@ -3,9 +3,15 @@ import dask.dataframe as dd
 import logging
 from datetime import datetime
 import time
+from pyspark.sql import SparkSession
+from pyspark import SQLContext
+from pyspark.sql import Row
+from pyspark.sql.types import *
+ss = SparkSession.builder.appName('DataFrame').getOrCreate()
+s = SQLContext(ss)
 
-VERSION = 1.3
-# VERSION = "develop"
+# VERSION = 1.3
+VERSION = "develop"
 
 if VERSION != "develop":
     # Путь к файлу для обработки:
@@ -49,27 +55,36 @@ def main(filename, path):
     print(filename)
     # Проверка типа поля DATA -> INT в CE_Calendar_shift.
     if filename == "CE_Calendar_shift.txt":
-        df = dd.read_csv(path + filename, delimiter=';', encoding='1251')
+        # df = dd.read_csv(path + filename, delimiter=';', encoding='1251')
+        df = s.read.option("delimiter", ";").csv(path + filename)
         # Конвертируем в INT
-        df[df.columns[14]] = df[df.columns[14]].astype('int64')
+        # df[df.columns[14]] = df[df.columns[14]].astype('int64')
         # Конвертируем в INT название столбца, чтобы не потерялось первое значение.
-        df = df.rename(columns={df.columns[14]: int(float(df.columns[14]))})
-        count_txt = df.shape[0].compute() + 1
-        df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False, single_file=True)
+        # df = df.rename(columns={df.columns[14]: int(float(df.columns[14]))})
+        df = df.withColumn('_c14', df['_c14'].cast(DoubleType()))
+        df = df.withColumn('_c14', df['_c14'].cast(IntegerType()))
+        df.repartition(1).write.format('com.databricks.spark.csv').option("header", "true").mode('overwrite').save(
+            path + filename.replace(".txt", ".csv"))
+        count_txt = df.count() + 1
+        # df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False, single_file=True)
     else:
-        df = dd.read_csv(path + filename, delimiter=';', dtype=str)
+        # df = dd.read_csv(path + filename, delimiter=';', dtype=str)
+        df = s.read.option("delimiter", ";").csv(path + filename)
+        df.repartition(1).write.format('com.databricks.spark.csv').option("header", "true").mode('overwrite').save(
+            path + filename.replace(".txt", ".csv"))
         # count all  lines.
-        count_txt = df.shape[0].compute() + 1
-        df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False, single_file=True)
+        count_txt = df.count() + 1
+        # df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False, single_file=True)
         # Путь к файлу
-        df = dd.read_csv(path + filename, delimiter=';', dtype=str)
+        # df = dd.read_csv(path + filename, delimiter=';', dtype=str)
         # Убираю доп. ковычки
-        df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False, single_file=True)
+        # df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False, single_file=True)
     '''Сверка по кол-ву: txt == csv'''
-    df_new = dd.read_csv(path + filename, delimiter=';', dtype=str)
-    count_csv = df_new.shape[0].compute() + 1
-    # print('count_txt ', type(count_txt), count_txt)
-    # print('count_csv ', type(count_csv), count_csv)
+    # df_new = dd.read_csv(path + filename, delimiter=';', dtype=str)
+    df_new = s.read.option("delimiter", ";").csv(path + filename)
+    count_csv = df_new.count() + 1
+    print('count_txt ', type(count_txt), count_txt)
+    print('count_csv ', type(count_csv), count_csv)
     if count_txt == count_csv:
         print(f' count_txt {count_txt}  совпадает с count_csv {count_csv}')
     else:
@@ -98,11 +113,11 @@ if __name__ == '__main__':
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
         #  Обрабатываем каждую папку отдельно:Commercial
-        for file in list_name_Commercial:
-            main(filename=file, path=path_to_file_Commercial)
-        #  Обрабатываем каждую папку отдельно: PnL
-        for file in list_name_PnL:
-            main(filename=file, path=path_to_file_PnL)
+        # for file in list_name_Commercial:
+        #     main(filename=file, path=path_to_file_Commercial)
+        # #  Обрабатываем каждую папку отдельно: PnL
+        # for file in list_name_PnL:
+        #     main(filename=file, path=path_to_file_PnL)
         # Календарный сдвиг
         for file in Calendar_shift:
             main(filename=file, path=path_to_file_Calendar_shift)
