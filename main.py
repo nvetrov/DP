@@ -1,10 +1,9 @@
-# import pandas as pd
 import dask.dataframe as dd
 import logging
 from datetime import datetime
 import time
 
-VERSION = 1.3
+VERSION = 1.4
 # VERSION = "develop"
 
 if VERSION != "develop":
