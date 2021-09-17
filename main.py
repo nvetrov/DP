@@ -4,7 +4,7 @@ import logging
 from datetime import datetime
 import time
 
-VERSION = 1.4
+VERSION = 1.3
 # VERSION = "develop"
 
 if VERSION != "develop":
@@ -66,13 +66,14 @@ def main(filename, path):
         # Убираю доп. ковычки
         df.to_csv(path + filename.replace(".txt", ".csv"), sep=";", index=False, single_file=True)
     '''Сверка по кол-ву: txt == csv'''
-    # df_new = dd.read_csv(path + filename, delimiter=';', dtype=str)
-    # count_csv = df_new.shape[0].compute() + 1
-
-    # if count_txt == count_csv:
-    #     print(f' count_txt {count_txt}  совпадает с count_csv {count_csv}')
-    # else:
-    #     logging.error("count_csv != count_csv")
+    df_new = dd.read_csv(path + filename, delimiter=';', dtype=str)
+    count_csv = df_new.shape[0].compute() + 1
+    # print('count_txt ', type(count_txt), count_txt)
+    # print('count_csv ', type(count_csv), count_csv)
+    if count_txt == count_csv:
+        print(f' count_txt {count_txt}  совпадает с count_csv {count_csv}')
+    else:
+        logging.error("count_csv != count_csv")
 
     #  В ЛОГ
     total_string = format(round(time.time() - start_job, 2))
@@ -84,7 +85,7 @@ def main(filename, path):
     logging.info(output)
     print(filename.replace(".txt", ".csv"))
     del df
-    # del df_new
+    del df_new
     # print("End: " + path + filename.replace(".txt", ".csv"))
     # console
     return 0
