@@ -3,7 +3,7 @@ import logging
 from datetime import datetime
 import time
 
-VERSION = 1.5
+VERSION = 1.6
 # VERSION = "develop"
 
 if VERSION != "develop":
