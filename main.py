@@ -15,7 +15,7 @@ except ValueError:
 
 print(data_argv[1])
 
-VERSION = 1.6
+VERSION = 1.7
 # VERSION = "develop"
 
 if VERSION != "develop":
