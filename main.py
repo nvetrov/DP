@@ -1,7 +1,19 @@
+# -*- coding: UTF-8 -*-
+from sys import argv
 import dask.dataframe as dd
 import logging
 from datetime import datetime
 import time
+
+data_argv = argv
+try:
+    # Commercial_argv, PnL_argv, Calendar_shift_argv = argv
+    data_argv = argv
+except ValueError:
+    print('ValueError')
+
+
+print(data_argv[1])
 
 VERSION = 1.6
 # VERSION = "develop"
@@ -67,8 +79,6 @@ def main(filename, path):
     '''Сверка по кол-ву: txt == csv'''
     df_new = dd.read_csv(path + filename, delimiter=';', dtype=str)
     count_csv = df_new.shape[0].compute() + 1
-    # print('count_txt ', type(count_txt), count_txt)
-    # print('count_csv ', type(count_csv), count_csv)
     if count_txt == count_csv:
         print(f' count_txt {count_txt}  совпадает с count_csv {count_csv}')
     else:
@@ -77,8 +87,8 @@ def main(filename, path):
     #  В ЛОГ
     total_string = format(round(time.time() - start_job, 2))
     now_string = today.strftime("%d/%m/%Y %H:%M:%S")
-    output = "Start job: " + now_string + ';' + total_string + ";" + filename.replace(".txt",
-                                                                                      ".csv") + ";" + str(
+    output = now_string + ';' + total_string + ";" + filename.replace(".txt",
+                                                                      ".csv") + ";" + str(
         count_csv)
     # Add line to pyConvert.log
     logging.info(output)
@@ -87,24 +97,29 @@ def main(filename, path):
     del df_new
     # print("End: " + path + filename.replace(".txt", ".csv"))
     # console
-    return 0
+    return data_argv[1]
 
 
-# START APP HERE:
 if __name__ == '__main__':
     start_time = time.time()
     try:
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-        #  Обрабатываем каждую папку отдельно:Commercial
-        for file in list_name_Commercial:
-            main(filename=file, path=path_to_file_Commercial)
+        # Обрабатываем каждую папку отдельно:Commercial
+        if data_argv[1] == 'Commercial':
+            for file in list_name_Commercial:
+                main(filename=file, path=path_to_file_Commercial)
+
         #  Обрабатываем каждую папку отдельно: PnL
-        for file in list_name_PnL:
-            main(filename=file, path=path_to_file_PnL)
+        if data_argv[1] == 'PnL':
+            for file in list_name_PnL:
+                main(filename=file, path=path_to_file_PnL)
+
         # Календарный сдвиг
-        for file in Calendar_shift:
-            main(filename=file, path=path_to_file_Calendar_shift)
+        if data_argv[1] == 'Calendar_shift':
+
+            for file in Calendar_shift:
+                main(filename=file, path=path_to_file_Calendar_shift)
         print(time.time() - start_time)
     except EOFError as e:
         # print("Caught the EOF error.")
