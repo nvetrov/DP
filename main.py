@@ -13,7 +13,7 @@ except ValueError:
     print('ValueError')
 
 
-print(data_argv[1])
+# print(data_argv[1])
 
 VERSION = 1.8
 # VERSION = "develop"
@@ -32,6 +32,7 @@ else:
     path_to_log = "pyConvert.log"
 
 # Название файлов по выгрузки
+#  Коммерческие показатели
 list_name_Commercial = [
     "CE_Commercial_TSC_Day.txt",
     "CE_Commercial_CPC_Month.txt",
@@ -40,7 +41,7 @@ list_name_Commercial = [
     "CE_Commercial_TSC_Month.txt",
     "CE_Commercial_NoCPC_Month.txt"
 ]
-
+#  CЧёт эксплуатации
 list_name_PnL = [
     "CE_PnL_CPC_Month.txt",
     "CE_PnL_NoCPC_Month.txt"
