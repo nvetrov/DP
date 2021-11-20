@@ -12,10 +12,9 @@ try:
 except ValueError:
     print('ValueError')
 
-
 # print(data_argv[1])
 
-VERSION = 1.8
+VERSION = 1.9
 # VERSION = "develop"
 
 if VERSION != "develop":
@@ -23,12 +22,14 @@ if VERSION != "develop":
     path_to_file_Commercial = "D:\\Export\\Tableau\\DP\\Commercial\\"
     path_to_file_PnL = "D:\\Export\\Tableau\\DP\\PnL\\"
     path_to_file_Calendar_shift = "D:\\Export\\Tableau\\DP\\Calendar_shift\\"
+    path_to_file_Efficiency = "C:\\Users\\60001240\\Desktop\\DP\\Efficiency\\"
     #  main .log file
     path_to_log = "D:\\HyperLog\\DP\\pyConvert.log"
 else:
     path_to_file_Commercial = "C:\\Users\\60001240\\Desktop\\DP\\Commercial\\"
     path_to_file_PnL = "C:\\Users\\60001240\\Desktop\\DP\\PnL\\"
     path_to_file_Calendar_shift = "C:\\Users\\60001240\\Desktop\\DP\\Calendar_shift\\"
+    path_to_file_Efficiency = "C:\\Users\\60001240\\Desktop\\DP\\Efficiency\\"
     path_to_log = "pyConvert.log"
 
 # Название файлов по выгрузки
@@ -48,6 +49,10 @@ list_name_PnL = [
 ]
 Calendar_shift = [
     "CE_Calendar_shift.txt"
+]
+# Эффективность
+list_name_Efficiency = [
+    "CE_Efficiency_Month.txt"
 ]
 
 #  Лог
@@ -83,7 +88,9 @@ def main(filename, path):
     if count_txt == count_csv:
         print(f' count_txt {count_txt}  совпадает с count_csv {count_csv}')
     else:
+        print(f' count_txt {count_txt} НЕ совпадает с count_csv {count_csv}')
         logging.error("count_csv != count_csv")
+        return 1  # 1 не сработало.
 
     #  В ЛОГ
     total_string = format(round(time.time() - start_job, 2))
@@ -96,9 +103,7 @@ def main(filename, path):
     print(filename.replace(".txt", ".csv"))
     del df
     del df_new
-    # print("End: " + path + filename.replace(".txt", ".csv"))
-    # console
-    return data_argv[1]
+    return 0  # 0 - всё ОК.
 
 
 if __name__ == '__main__':
@@ -121,6 +126,12 @@ if __name__ == '__main__':
 
             for file in Calendar_shift:
                 main(filename=file, path=path_to_file_Calendar_shift)
+
+                #  Обрабатываем каждую папку отдельно: PnL
+        if data_argv[1] == 'Efficiency':
+            for file in list_name_Efficiency:
+                main(filename=file, path=path_to_file_Efficiency)
+
         print(time.time() - start_time)
     except EOFError as e:
         # print("Caught the EOF error.")
