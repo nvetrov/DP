@@ -14,8 +14,8 @@ except ValueError:
 
 # print(data_argv[1])
 
-VERSION = 1.9
-# VERSION = "develop"
+# VERSION = 10.0
+VERSION = "develop"
 
 if VERSION != "develop":
     # Путь к файлу для обработки:
@@ -127,7 +127,7 @@ if __name__ == '__main__':
             for file in Calendar_shift:
                 main(filename=file, path=path_to_file_Calendar_shift)
 
-                #  Обрабатываем каждую папку отдельно: PnL
+                #  Обрабатываем каждую папку отдельно: Efficiency
         if data_argv[1] == 'Efficiency':
             for file in list_name_Efficiency:
                 main(filename=file, path=path_to_file_Efficiency)
