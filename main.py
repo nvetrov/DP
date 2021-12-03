@@ -12,12 +12,13 @@ try:
 except ValueError:
     print('ValueError')
 
-# print(data_argv[1])
+VERSION = 14.0
 
-VERSION = 13.0
-# VERSION = "develop"
+# ОКРУЖЕНИЕ
+PROD = True
+develop = False
 
-if VERSION != "develop":
+if PROD:
     # Путь к файлу для обработки:
     path_to_file_Commercial = "D:\\Export\\Tableau\\DP\\Commercial\\"
     path_to_file_PnL = "D:\\Export\\Tableau\\DP\\PnL\\"
