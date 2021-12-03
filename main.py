@@ -14,8 +14,8 @@ except ValueError:
 
 # print(data_argv[1])
 
-# VERSION = 12.0
-VERSION = "develop"
+VERSION = 12.0
+# VERSION = "develop"
 
 if VERSION != "develop":
     # Путь к файлу для обработки:
