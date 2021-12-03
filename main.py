@@ -5,18 +5,18 @@ import logging
 from datetime import datetime
 import time
 
-data_argv = argv
 try:
-    # Commercial_argv, PnL_argv, Calendar_shift_argv = argv
     data_argv = argv
-except ValueError:
-    print('ValueError')
+except IndexError as e:
+    logging.error("Run script must with parameter")
+    print('Run script must with parameter')
+    exit('1')
+    raise e
 
-VERSION = 14.0
+VERSION = 15.0
 
 # ОКРУЖЕНИЕ
 PROD = True
-develop = False
 
 if PROD:
     # Путь к файлу для обработки:
@@ -62,9 +62,9 @@ logging.basicConfig(filename=path_to_log, level=logging.INFO)
 
 # Функция конвертирует данные и проверяет кол-во записей.
 def main(filename, path):
+    print(filename)
     today = datetime.now()
     start_job = time.time()
-    print(filename)
     # Проверка типа поля DATA -> INT в CE_Calendar_shift.
     if filename == "CE_Calendar_shift.txt":
         df = dd.read_csv(path + filename, delimiter=';', encoding='1251')
@@ -87,9 +87,9 @@ def main(filename, path):
     df_new = dd.read_csv(path + filename, delimiter=';', dtype=str)
     count_csv = df_new.shape[0].compute() + 1
     if count_txt == count_csv:
-        print(f' count_txt {count_txt}  совпадает с count_csv {count_csv}')
+        print(f' count_txt {count_txt}  == count_csv {count_csv}')
     else:
-        print(f' count_txt {count_txt} НЕ совпадает с count_csv {count_csv}')
+        print(f' count_txt {count_txt} <> count_csv {count_csv}')
         logging.error("count_csv != count_csv")
         return 1  # 1 не сработало.
 
@@ -133,11 +133,29 @@ if __name__ == '__main__':
             for file in list_name_Efficiency:
                 main(filename=file, path=path_to_file_Efficiency)
 
-        print(time.time() - start_time)
+        if not data_argv[1] == 'Efficiency' and \
+           not data_argv[1] == 'Calendar_shift' and \
+           not data_argv[1] == 'PnL' and \
+           not data_argv[1] == 'Commercial':
+            logging.error(f'Wrong data_argv {data_argv}')
+            print(f'Used to: https://github.com/nvetrov/DP ')
+            print('-----------------------------')
+            print(f'py .\main.py Commercial')
+            print(f'py .\main.py PnL')
+            print(f'py .\main.py Calendar_shift')
+            print(f'py .\main.py Efficiency')
+            print(f'-------------------------------------')
+            exit('1')
+
     except EOFError as e:
         # print("Caught the EOF error.")
         logging.error("Caught the EOF error")
         raise e
     except IOError as e:
         logging.error("Caught the I/O error")
+        raise e
+    except IndexError as e:
+        logging.error(f'Run script must with parameter')
+        print('Run script must with parameter: ')
+        exit('1')
         raise e
