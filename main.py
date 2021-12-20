@@ -13,16 +13,16 @@ except IndexError as e:
     exit('1')
     raise e
 
-VERSION = 15.0
+VERSION = 16.0
 
 # ОКРУЖЕНИЕ
 PROD = True
 
 if PROD:
     # Путь к файлу для обработки:
-    path_to_file_Commercial = "D:\\Export\\Tableau\\DP\\Commercial\\"
-    path_to_file_PnL = "D:\\Export\\Tableau\\DP\\PnL\\"
-    path_to_file_Calendar_shift = "D:\\Export\\Tableau\\DP\\Calendar_shift\\"
+    path_to_file_Commercial = "D:\\Export\\DP\\Commercial\\"
+    path_to_file_PnL = "D:\\Export\\DP\\PnL\\"
+    path_to_file_Calendar_shift = "D:\\Export\\DP\\Calendar_shift\\"
     path_to_file_Efficiency = "D:\\Export\\DP\\Efficiency\\"
     #  main .log file
     path_to_log = "D:\\HyperLog\\DP\\pyConvert.log"
