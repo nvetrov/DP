@@ -13,7 +13,7 @@ except IndexError as e:
     exit('1')
     raise e
 
-VERSION = 16.0
+VERSION = 19.0
 
 # ОКРУЖЕНИЕ
 PROD = True
@@ -24,6 +24,7 @@ if PROD:
     path_to_file_PnL = "D:\\Export\\DP\\PnL\\"
     path_to_file_Calendar_shift = "D:\\Export\\DP\\Calendar_shift\\"
     path_to_file_Efficiency = "D:\\Export\\DP\\Efficiency\\"
+    path_to_file_ntz = "D:\\Export\\DP\\ntz\\"
     #  main .log file
     path_to_log = "D:\\HyperLog\\DP\\pyConvert.log"
 else:
@@ -31,6 +32,7 @@ else:
     path_to_file_PnL = "C:\\Users\\60001240\\Desktop\\DP\\PnL\\"
     path_to_file_Calendar_shift = "C:\\Users\\60001240\\Desktop\\DP\\Calendar_shift\\"
     path_to_file_Efficiency = "C:\\Users\\60001240\\Desktop\\DP\\Efficiency\\"
+    path_to_file_ntz = "C:\\Users\\60001240\\Desktop\\DP\\ntz\\"
     path_to_log = "pyConvert.log"
 
 # Название файлов по выгрузки
@@ -38,10 +40,13 @@ else:
 list_name_Commercial = [
     "CE_Commercial_TSC_Day.txt",
     "CE_Commercial_CPC_Month.txt",
+    "CE_Commercial_CPC_Month_Plan2.txt",
     "CE_Commercial_CPC_Day.txt",
     "CE_Commercial_NoCPC_Day.txt",
     "CE_Commercial_TSC_Month.txt",
-    "CE_Commercial_NoCPC_Month.txt"
+    "CE_Commercial_TSC_Month_Plan2.txt",
+    "CE_Commercial_NoCPC_Month.txt",
+    "CE_Commercial_NoCPC_Month_Plan2.txt"
 ]
 #  CЧёт эксплуатации
 list_name_PnL = [
@@ -54,6 +59,11 @@ Calendar_shift = [
 # Эффективность
 list_name_Efficiency = [
     "CE_Efficiency_Month.txt"
+]
+
+# Нетоварные закупки
+list_name_ntz = [
+    "ntz_month.txt"
 ]
 
 #  Лог
@@ -121,6 +131,11 @@ if __name__ == '__main__':
         if data_argv[1] == 'PnL':
             for file in list_name_PnL:
                 main(filename=file, path=path_to_file_PnL)
+            #  Обрабатываем каждую папку отдельно: PnL
+        
+        if data_argv[1] == 'ntz':
+            for file in list_name_ntz:
+                main(filename=file, path=path_to_file_PnL)
 
         # Календарный сдвиг
         if data_argv[1] == 'Calendar_shift':
@@ -136,6 +151,7 @@ if __name__ == '__main__':
         if not data_argv[1] == 'Efficiency' and \
            not data_argv[1] == 'Calendar_shift' and \
            not data_argv[1] == 'PnL' and \
+           not data_argv[1] == 'ntz' and \
            not data_argv[1] == 'Commercial':
             logging.error(f'Wrong data_argv {data_argv}')
             print(f'Used to: https://github.com/nvetrov/DP ')
@@ -144,6 +160,7 @@ if __name__ == '__main__':
             print(f'py .\main.py PnL')
             print(f'py .\main.py Calendar_shift')
             print(f'py .\main.py Efficiency')
+            print(f'py .\main.py ntz')
             print(f'-------------------------------------')
             exit('1')
 
