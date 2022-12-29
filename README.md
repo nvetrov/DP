@@ -23,6 +23,10 @@ pip install -r .\requirements.txt
 Запуск: D:\HyperCmd\
 Лог: D:\HyperLog\
 
+  
+ vscode:    
+  pip install dask
+  python -m pip install "dask[dataframe]" --upgrade 
 
 ### Загрузить изменения с сервера
 <code> git pull  </code> 
