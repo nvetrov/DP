@@ -12,10 +12,12 @@ https://mothergeo-py.readthedocs.io/en/latest/development/how-to/venv-win.html
 
 
 
+
+<code>
 D:\HyperPy\DP>py -m venv env
 .\env\Scripts\activate.bat
 pip install -r .\requirements.txt
-
+<code/>
 ####выдать права на папки: 
 Дата: D:\Export\ 
 Запуск: D:\HyperCmd\
