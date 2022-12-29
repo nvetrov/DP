@@ -8,6 +8,11 @@
 ####Creating a virtual environment
 https://mothergeo-py.readthedocs.io/en/latest/development/how-to/venv-win.html
 
+![image](https://user-images.githubusercontent.com/17742497/209914640-709a366f-042a-4020-aa5a-5351c1dd3d4e.png)
+
+
+
+
 <code>py -m pip install --user virtualenv </code>
 
 <code>py -m venv env </code>
